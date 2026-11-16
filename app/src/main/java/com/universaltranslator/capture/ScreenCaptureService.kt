@@ -38,6 +38,7 @@ import com.google.mlkit.vision.text.chinese.ChineseTextRecognizerOptions
 import com.google.mlkit.vision.text.devanagari.DevanagariTextRecognizerOptions
 import com.google.mlkit.nl.languageid.LanguageIdentification
 import com.google.mlkit.nl.translate.*
+import com.google.mlkit.common.model.DownloadConditions
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
