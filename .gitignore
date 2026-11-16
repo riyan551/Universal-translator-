@@ -6,3 +6,4 @@ local.properties
 *.iml
 universal-translator-release.jks
 universal-translator-release.jks
+*.keystore
