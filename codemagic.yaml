@@ -1,4 +1,5 @@
 
+cat > codemagic.yaml <<'EOF'
 workflows:
   android-universal-translator:
       name: Universal Translator Android
@@ -8,12 +9,12 @@ workflows:
                           android_signing:
                                   - universal_translator_key
                                       scripts:
-                                            - name: Build signed universal APK
+                                            - name: Build signed APK
                                                     script: |
                                                               chmod +x ./gradlew || true
                                                                         gradle --no-daemon clean :app:assembleRelease
                                                                             artifacts:
                                                                                   - app/build/outputs/apk/release/*.apk
                                                                                         - app/build/outputs/mapping/release/mapping.txt
-
-                                                                                      
+                                                                                        EOF
+                                                                                        
