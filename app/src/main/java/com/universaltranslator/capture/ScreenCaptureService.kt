@@ -38,7 +38,6 @@ import com.google.mlkit.vision.text.chinese.ChineseTextRecognizerOptions
 import com.google.mlkit.vision.text.devanagari.DevanagariTextRecognizerOptions
 import com.google.mlkit.nl.languageid.LanguageIdentification
 import com.google.mlkit.nl.translate.*
-import com.google.mlkit.common.model.DownloadConditions
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
@@ -289,7 +288,9 @@ class ScreenCaptureService : Service() {
                     }
                 }.start()
             } else if (mode == "online") {
-                showTranslatedBlock("Atur endpoint online", box, backgroundColor, patch, currentGeneration)
+                // Do not draw the same setup prompt over every OCR block. The
+                // endpoint is configured in the main screen; leave source text visible.
+                return@addOnSuccessListener
             } else {
                 offlineTranslate(raw, source, target, mode, box, backgroundColor, patch, currentGeneration)
             }
@@ -349,7 +350,9 @@ class ScreenCaptureService : Service() {
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
                     WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or
-                    WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+                    WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
+                    // Keep the translator's own overlay out of MediaProjection frames.
+                    WindowManager.LayoutParams.FLAG_SECURE,
                 PixelFormat.TRANSLUCENT
             ).apply { gravity = Gravity.TOP or Gravity.START }
             windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
